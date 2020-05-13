@@ -13,7 +13,7 @@
 
 RpcDigitalOut myled1(LED1,"myled1");
 
-RpcDigitalOut myled2(LED2,"myled2");
+RpcDigitalOut myled3(LED3,"myled3");
 
 Serial pc(USBTX, USBRX);
 
@@ -76,7 +76,7 @@ void LEDControl (Arguments *in, Reply *out)   {
 
     // In this scenario, when using RPC delimit the two arguments with a space.
 
-    x = in->getArg<double>();
+    //x = in->getArg<double>();
 
 
     // Have code here to call another RPC function to wake up specific led or close it.
@@ -85,11 +85,70 @@ void LEDControl (Arguments *in, Reply *out)   {
 
     char strings[20];
 
-    int led = x;
+    int led, on, n;
 
-    int on = 0;
+    for (int i = 0; i < 5; i++){
 
-    for (int i = 0; i < y; i++){
+    led = 1;
+
+    on = 0;
+
+    n = sprintf(strings, "/myled%d/write %d", led, on);
+
+    strcpy(buffer, strings);
+
+    RPC::call(buffer, outbuf);
+
+    led = 3;
+
+    on = 1;
+
+    n = sprintf(strings, "/myled%d/write %d", led, on);
+
+    strcpy(buffer, strings);
+
+    RPC::call(buffer, outbuf);
+
+
+
+    wait(0.5);
+
+    led = 3;
+
+    on = 0;
+
+    n = sprintf(strings, "/myled%d/write %d", led, on);
+
+    strcpy(buffer, strings);
+
+    RPC::call(buffer, outbuf);
+
+    led = 1;
+
+    on = 1;
+
+    n = sprintf(strings, "/myled%d/write %d", led, on);
+
+    strcpy(buffer, strings);
+
+    RPC::call(buffer, outbuf);
+
+    wait(0.5);
+    }
+
+    led = 1;
+
+    on = 0;
+
+    n = sprintf(strings, "/myled%d/write %d", led, on);
+
+    strcpy(buffer, strings);
+
+    RPC::call(buffer, outbuf);
+
+
+
+    /*for (int i = 0; i < y; i++){
 
         int n = sprintf(strings, "/myled%d/write %d", led, on);
 
@@ -107,7 +166,7 @@ void LEDControl (Arguments *in, Reply *out)   {
 
         RPC::call(buffer, outbuf);
     
-    }
+    }*/
 
     if (success) {
 
